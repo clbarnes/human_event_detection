@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/clbarnes/human_event_detection.png?label=ready&title=Ready)](https://waffle.io/clbarnes/human_event_detection)
 Human event detection
 =====================
 
