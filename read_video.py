@@ -95,11 +95,10 @@ cap.set(cv2.CAP_PROP_POS_FRAMES, frame_no)    # todo: this might be wrong
 print(event_codes)
 
 t = Timer()
-
+t.tic()
 while cap.isOpened():
     frame_no += 1
 
-    t.tic()
     _, frame = cap.read()
     cv2.imshow(vid_path, frame)
 
@@ -110,6 +109,7 @@ while cap.isOpened():
         event_frames[inp].append(str(frame_no))
     elif inp is ord(" "):
         break
+    t.tic()
 
 cap.release()
 cv2.destroyAllWindows()
