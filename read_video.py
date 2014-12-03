@@ -16,6 +16,7 @@ def time_to_frame(seconds_str):
 
 class Timer():
     def __init__(self):
+        self._manual_start_time = None
         self.start_time = None
         if sys.platform == 'win32':
             self.default_timer = time.clock
@@ -59,13 +60,9 @@ def print_help():
 u_args = sys.argv[1:]
 
 optlist, args = getopt(u_args, "t:f:l", ["start-time=", "start-frame=", "help"])
-if len(optlist) > 1:
-    raise ValueError("Too many optional arguments given: give either a start time or a start frame")
 
-if "--help" in args:
+if ("--help", "") in optlist:
     print_help()
-if "-l" in args:
-    logical = True
 
 vid_path = args[0]
 out_file_path = args[1]
@@ -75,8 +72,16 @@ vid_fps = cap.get(cv2.CAP_PROP_FPS)
 
 frame_no = 0
 
+logical = False
 if optlist:
     optdict = dict(optlist)
+
+    if "--help" in optdict:
+        print_help()
+        sys.exit()
+
+    logical = "-l" in optdict
+
     if "-f" in optdict:
         frame_no = int(optdict["-f"])
     elif "--start-frame" in optdict:
