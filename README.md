@@ -18,10 +18,10 @@ When the script is run, the user can specify keypresses which correspond to the 
 
 ## OPTIONS
 
-`-f NUM, --start-frame=NUM`
+`-f NUM`
 Frame number at which to start video playback
 
-`-t SECONDS, --start-time=SECONDS`
+`-t SECONDS`
 Time at which to start video playback 
 
 `--help`
@@ -29,6 +29,12 @@ Not yet implemented
 
 `-l`
 Return event frames as logical array rather than list of frame numbers
+
+`-c CONFIG_FILE`
+Path to alternative config file
+
+`-s SPEED`
+Relative speed at which to play video (note: there are no optimisations for high-speed playback, so significantly increasing the rate of playback is not recommended) 
 
 ## BUGS
 
