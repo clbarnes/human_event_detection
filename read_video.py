@@ -1,7 +1,6 @@
 import cv2
 import sys
 from getopt import gnu_getopt as getopt
-import time
 try:
     from configparser import ConfigParser
 except ImportError:
@@ -13,30 +12,6 @@ DEFAULT_CONFIG = "config.conf"
 def time_str_to_frame(seconds_str):
     seconds = float(seconds_str)
     return round(seconds*vid_fps)
-
-
-class Timer():
-    def __init__(self):
-        self._manual_start_time = None
-        self.start_time = None
-        if sys.platform == 'win32':
-            self.default_timer = time.clock
-        else:
-            self.default_timer = time.time
-
-    def tic(self):
-        self._manual_start_time = self.default_timer()
-
-    def toc(self):
-        return self.default_timer() - self._manual_start_time
-
-    def __enter__(self):
-        self.start_time = self.default_timer()
-        return self
-
-    def __exit__(self, *args):
-        self.end_time = self.default_timer()
-        self.interval = self.start_time - self.end_time
 
 
 def initialise_event_frames(config_file_path=DEFAULT_CONFIG):
@@ -66,9 +41,6 @@ num_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 
 frame_no = 0
 
-logical = False
-config_file = DEFAULT_CONFIG
-vid_speed = 1
 if optlist:
     optdict = dict(optlist)
 
@@ -86,13 +58,15 @@ if optlist:
         frame_no = int(optdict["-f"])
     elif "-t" in optdict:
         frame_no = time_str_to_frame(optdict["-t"])
+else:
+    logical = False
+    config_file = DEFAULT_CONFIG
+    vid_speed = 1
 
 event_frames = initialise_event_frames(config_file)
 
-cap.set(cv2.CAP_PROP_POS_FRAMES, frame_no)    # todo: this might be wrong
+cap.set(cv2.CAP_PROP_POS_FRAMES, frame_no)
 
-t = Timer()
-t.tic()
 delay = round(1000/(vid_fps*vid_speed))
 while cap.isOpened():
     frame_no += 1
@@ -107,7 +81,6 @@ while cap.isOpened():
         event_frames[inp].append(str(frame_no))
     elif inp is ord(" "):
         break
-    t.tic()
 
 cap.release()
 cv2.destroyAllWindows()
