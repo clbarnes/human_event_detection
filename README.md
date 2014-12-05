@@ -4,7 +4,10 @@ Human event detection
 
 ## DEPENDENCIES
 
- - OpenCV-Python (install instructions for [windows](http://docs.opencv.org/trunk/doc/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html#install-opencv-python-in-windows) and [fedora linux](http://docs.opencv.org/trunk/doc/py_tutorials/py_setup/py_setup_in_fedora/py_setup_in_fedora.html#install-opencv-python-in-fedora))
+ - Python 3.x ([download here](https://www.python.org/downloads/))
+ - OpenCV-Python 3.x (install instructions for [windows](http://docs.opencv.org/trunk/doc/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html#install-opencv-python-in-windows) and [fedora linux](http://docs.opencv.org/trunk/doc/py_tutorials/py_setup/py_setup_in_fedora/py_setup_in_fedora.html#install-opencv-python-in-fedora))
+ 
+NOTE: Branch `master` requires Python 3.x and OpenCV 3.x. Use branch `py2` for a version compatible with Python 2.x and OpenCV 2.x.
  
 ## SYNOPSIS
 
