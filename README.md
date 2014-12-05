@@ -5,9 +5,10 @@ Human event detection
 ## DEPENDENCIES
 
  - OpenCV-Python (install instructions for [windows](http://docs.opencv.org/trunk/doc/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html#install-opencv-python-in-windows) and [fedora linux](http://docs.opencv.org/trunk/doc/py_tutorials/py_setup/py_setup_in_fedora/py_setup_in_fedora.html#install-opencv-python-in-fedora))
- - NumPy (available [here](http://www.scipy.org/scipylib/download.html))
  
 ## SYNOPSIS
+
+Use in command line from directory containing read_video.py:
 
 `python read_video [options] VIDEO_PATH OUTPUT_PATH`
 
