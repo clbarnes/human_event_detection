@@ -67,7 +67,9 @@ delay = round(1000/(vid_fps*vid_speed))
 while cap.isOpened():
     frame_no += 1
 
-    _, frame = cap.read()
+    ret, frame = cap.read()
+    if not ret:
+        break
     cv2.imshow(vid_path, frame)
 
     inp = cv2.waitKey(delay)
