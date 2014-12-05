@@ -1,10 +1,7 @@
 import cv2
 import sys
 from getopt import gnu_getopt as getopt
-try:
-    from configparser import ConfigParser
-except ImportError:
-    from ConfigParser import ConfigParser
+from ConfigParser import ConfigParser
 
 
 DEFAULT_CONFIG = "config.conf"
