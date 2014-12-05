@@ -20,6 +20,12 @@ def initialise_event_frames(config_file_path=DEFAULT_CONFIG):
     return {ord(key): [value] for key, value in conf.items("key mappings")}
 
 
+def get_property_keys(config_file_path=DEFAULT_CONFIG):
+    conf = ConfigParser()
+    conf.read([config_file_path])
+    return {key: int(value) for key, value in conf.items("openCV property keys")}
+
+
 def print_help():
     raise NotImplementedError("I'll implement a help at some point...")
 
@@ -31,15 +37,6 @@ optlist, args = getopt(u_args, "t:f:lc:s:", ["help"])
 if ("--help", "") in optlist:
     print_help()
     sys.exit()
-
-vid_path = args[0]
-out_file_path = args[1]
-
-cap = cv2.VideoCapture(vid_path)
-vid_fps = cap.get(cv2.CAP_PROP_FPS)
-num_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-
-frame_no = 0
 
 if optlist:
     optdict = dict(optlist)
@@ -58,16 +55,28 @@ if optlist:
         frame_no = int(optdict["-f"])
     elif "-t" in optdict:
         frame_no = time_str_to_frame(optdict["-t"])
+    else:
+        frame_no = 0
 else:
     logical = False
     config_file = DEFAULT_CONFIG
     vid_speed = 1
+    frame_no = 0
+
+vid_path = args[0]
+out_file_path = args[1]
+
+openCV_properties = get_property_keys(config_file)
+
+cap = cv2.VideoCapture(vid_path)
+vid_fps = cap.get(openCV_properties["fps"])
+num_frames = cap.get(openCV_properties["frame_count"])
 
 event_frames = initialise_event_frames(config_file)
 
-cap.set(cv2.CAP_PROP_POS_FRAMES, frame_no)
+cap.set(openCV_properties["position_frames"], frame_no)
 
-delay = round(1000/(vid_fps*vid_speed))
+delay = int(round(1000/(vid_fps*vid_speed)))
 while cap.isOpened():
     frame_no += 1
 
