@@ -14,7 +14,7 @@ def time_str_to_frame(seconds_str):
 def initialise_event_frames(config_file_path=DEFAULT_CONFIG):
     conf = ConfigParser()
     conf.read([config_file_path])
-    return {ord(key): [value] for key, value in conf.items("key mappings")}
+    return {ord(key): [value] for value, key in conf.items("event key mappings")}
 
 
 def get_property_keys(config_file_path=DEFAULT_CONFIG):
@@ -70,6 +70,29 @@ vid_fps = cap.get(openCV_properties["fps"])
 num_frames = cap.get(openCV_properties["frame_count"])
 
 event_frames = initialise_event_frames(config_file)
+
+def pause(arg):
+    cv2.waitKey(0)
+
+def speed_up(delay):
+    return delay - (1000/vid_fps)*0.1
+
+def slow_down(delay):
+    return delay + (1000/vid_fps)*0.1
+
+def initialise_playback_controls(config_file_path):
+    conf = ConfigParser()
+    conf.read([config_file_path])
+    name_to_value = {key: ord(value) for key, value in conf.items("playback key mappings")}
+    playback_controls = {
+        name_to_value["pause"]: pause,
+        name_to_value["speed_up"]: speed_up,
+        name_to_value["slow_down"]: slow_down
+    }
+    return playback_controls
+
+
+playback_controls = initialise_playback_controls(config_file)
 
 cap.set(openCV_properties["position_frames"], frame_no)
 
