@@ -73,6 +73,7 @@ event_frames = initialise_event_frames(config_file)
 
 def pause(arg):
     cv2.waitKey(0)
+    return arg
 
 def speed_up(delay):
     return delay - (1000/vid_fps)*0.1
